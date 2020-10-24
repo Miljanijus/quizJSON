@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>JSON quiz</title>
+</head>
+<body>
+	<div id='quizBody'></div>
+	<script>
+		//JSON parsiranje
+		var json = '{"quiz": {"q1": {"question": "Which one is correct team name in NBA?", "options": ["New York Bulls", "Los Angeles Kings", "Golden State Warriros", "Huston Rocket"], "answer": "Huston Rocket"}, "q2": {"question": "&#34;Namaste&#34; is a traditional greeting in which Asian language?", "options": ["Hindi", "Mandarin", "Nepalese", "Thai"], "answer": "Hindi"}, "q3": {"question": "The Spree river flows through which major European capital city?", "options": ["Berlin", "Paris", "Rome", "London"], "answer": "Berlin"}, "q4": {"question": "Which famous artist had both a &#34;Rose Period&#34; and a &#34;Blue Period&#34;?", "options": ["Pablo Picasso", "Vincent van Gogh", "Salvador Dalí", "Edgar Degas"], "answer": "Pablo Picasso"} } }';
+		var obj = JSON.parse(json);
+		//Html elementi u js
+		document.getElementById("quizBody").innerHTML = '<h1> QUIZ </h1>';
+		document.getElementById("quizBody").innerHTML += '<form id="q1"><h2>' + obj.quiz.q1.question + '</h2></form>';
+		document.getElementById("quizBody").innerHTML += '<form id="q2"><h2>' + obj.quiz.q2.question + '</h2></form>';
+		document.getElementById("quizBody").innerHTML += '<form id="q3"><h2>' + obj.quiz.q3.question + '</h2></form>';
+		document.getElementById("quizBody").innerHTML += '<form id="q4"><h2>' + obj.quiz.q4.question + '</h2></form>';
+		//Radio button elementi za cekiranje odgovora
+		for (let i = 0; i < obj.quiz.q1.options.length; i++) {
+
+			document.getElementById("q1").innerHTML += '<input type="radio" class="q1" id="' + obj.quiz.q1.options[i] + '" name="question1" value="' + obj.quiz.q1.options[i] + '">' + obj.quiz.q1.options[i] + '<br>';
+		}
+		for (let i = 0; i < obj.quiz.q2.options.length; i++) {
+
+			document.getElementById("q2").innerHTML += '<input type="radio" class="q2" id="' + obj.quiz.q2.options[i] + '" name="question2" value="' + obj.quiz.q2.options[i] + '">' + obj.quiz.q2.options[i] + '<br>';
+		}
+		for (let i = 0; i < obj.quiz.q3.options.length; i++) {
+
+			document.getElementById("q3").innerHTML += '<input type="radio" class="q3" id="' + obj.quiz.q3.options[i] + '" name="question3" value="' + obj.quiz.q3.options[i] + '">' + obj.quiz.q3.options[i] + '<br>';
+		}
+		for (let i = 0; i < obj.quiz.q4.options.length; i++) {
+
+			document.getElementById("q4").innerHTML += '<input type="radio" class="q4" id="' + obj.quiz.q4.options[i] + '" name="question4" value="' + obj.quiz.q4.options[i] + '">' + obj.quiz.q4.options[i] + '<br>';
+		}
+		//Manipulacija local storage-om
+		var odg1 = localStorage.getItem('q1');
+		var odg2 = localStorage.getItem('q2');
+		var odg3 = localStorage.getItem('q3');
+		var odg4 = localStorage.getItem('q4');
+
+		window.addEventListener('load', function () {
+			if (odg1 !== null && odg2 !== null && odg3 !== null && odg4 !== null) {
+				document.getElementById(odg1).checked = true;
+				document.getElementById(odg2).checked = true;
+				document.getElementById(odg3).checked = true;
+				document.getElementById(odg4).checked = true;
+			}
+			console.log('old values :' + odg1 + ' ' + odg2 + ' ' + odg3 + ' ' + odg4);
+		});
+
+		document.getElementById('quizBody').addEventListener('change', function () {
+			var odg1 = document.forms[0];
+			for (let i = 0; i < odg1.length; i++) {
+				if (odg1[i].checked) {
+					odg1 = odg1[i].value;
+				}
+			}
+
+			var odg2 = document.forms[1];
+			for (let i = 0; i < odg2.length; i++) {
+				if (odg2[i].checked) {
+					odg2 = odg2[i].value;
+				}
+			}
+
+			var odg3 = document.forms[2];
+			for (let i = 0; i < odg3.length; i++) {
+				if (odg3[i].checked) {
+					odg3 = odg3[i].value;
+				}
+			}
+
+			var odg4 = document.forms[3];
+			for (let i = 0; i < odg4.length; i++) {
+				if (odg4[i].checked) {
+					odg4 = odg4[i].value;
+				}
+			}
+			localStorage.setItem("q1", odg1);
+			localStorage.setItem("q2", odg2);
+			localStorage.setItem("q3", odg3);
+			localStorage.setItem("q4", odg4);
+		});
+
+	</script>
+</body>
+</html>
